@@ -5,10 +5,15 @@ import styled from "@emotion/styled"
 export default function MinuteTimer() {
     const [timer, setTimer] = useState<number>(60);
 
+    if (timer === 0) {
+
+        location.reload();
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
             setTimer((prev) => Math.max(prev - 1, 0));
+
 
         }, 1000);
 

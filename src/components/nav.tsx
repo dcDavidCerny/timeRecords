@@ -49,6 +49,6 @@ div {
 }
 
 .games {
-    margin-right: 36px;
+    margin-right: 42px;
 }
 `

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "@emotion/styled"
-import MinuteTimer from "./MinuteTimer";
+import MinuteTimer from "../components/MinuteTimer";
 
 export default function SameColorsWins() {
 

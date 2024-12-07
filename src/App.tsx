@@ -3,9 +3,9 @@ import Footer from "./components/Footer";
 import "./App.css";
 import { MiniGamesCollection } from "./pages/MiniGamesCollection";
 import { Route, Routes } from "react-router";
-import SameColorsWins from "./components/SameColorsWins";
-import MakeItPop from "./components/MakeItPop";
-import SomeMathPractice from "./components/SomeMathPractice";
+import SameColorsWins from "./games/SameColorsWins";
+import MakeItPop from "./games/MakeItPop";
+import SomeMathPractice from "./games/SomeMathPractice";
 
 
 export default function App() {

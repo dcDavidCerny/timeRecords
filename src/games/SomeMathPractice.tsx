@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import MinuteTimer from "./MinuteTimer"
+import MinuteTimer from "../components/MinuteTimer"
 import { useState, useEffect } from "react";
 
 export default function SomeMathPractice() {
@@ -109,7 +109,6 @@ const SomeMathPracticeWrapper = styled.div`
     background-color: #636363;
     border: 1px solid white;
     display: inline-block;
-    cursor: pointer;
     transition: background-color 0.1s ease;
 }
 

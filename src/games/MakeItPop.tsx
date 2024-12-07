@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 import { useEffect, useState } from "react";
-import MinuteTimer from "./MinuteTimer";
+import MinuteTimer from "../components/MinuteTimer";
+
 export default function MakeItPop() {
     const [number, setNumber] = useState(0);
     const size = (number * 9) + 50;
@@ -10,8 +11,8 @@ export default function MakeItPop() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setNumber((prev) => Math.min(prev - Math.floor((prev / 7)), 50));
-        }, 1000);
+            setNumber((prev) => Math.min(prev - (prev / 800), 50));
+        }, 10);
 
         return () => clearInterval(interval);
     }, []);
@@ -30,7 +31,7 @@ export default function MakeItPop() {
                     height: size,
                     width: size
                 }}>
-                    {number}
+                    {Math.round(number)}
                 </div>
             </div>
 
@@ -42,16 +43,11 @@ export default function MakeItPop() {
 
 const MakeItPopWrapper = styled.div`
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    
     .timerDiv {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 10vh;
     }
     .circle {
         border: 1px solid white;
@@ -73,6 +69,7 @@ const MakeItPopWrapper = styled.div`
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
         }
     }
 `
