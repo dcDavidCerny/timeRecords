@@ -1,7 +1,39 @@
-import Nav from "./components/nav";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
+import "./App.css";
+import { MiniGamesCollection } from "./pages/MiniGamesCollection";
+import { Route, Routes } from "react-router";
+import SameColorsWins from "./components/SameColorsWins";
+import MakeItPop from "./components/MakeItPop";
+import SomeMathPractice from "./components/SomeMathPractice";
+
 
 export default function App() {
     return (
-        <Nav />
+        <div className="main">
+            <Nav />
+            <div className="leftRightCenterColumns">
+                <div className="left"></div>
+                <div className="center">
+                    <Routes>
+                        {/* pro "/" */}
+                        <Route path="/" element={<MiniGamesCollection />} />
+                        {/* example of creating route to specific game by title */}
+                        <Route path="/game/same colors wins" element={<SameColorsWins />} />
+
+                        <Route path="/game/make it pop" element={<MakeItPop />} />
+
+                        <Route path="/game/some math practice" element={<SomeMathPractice />} />
+
+
+                        {/* pro vše ostatní kromě toho co bylo definované nahoře nad touto poslední routhe path */}
+                        <Route path="*" element={<div> 404: not found </div>} />
+                    </Routes>
+
+                </div>
+                <div className="right"></div>
+            </div>
+            <Footer></Footer>
+        </div>
     )
 }
