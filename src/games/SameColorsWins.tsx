@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled"
 import MinuteTimer from "../components/MinuteTimer";
-import { setCompletedGame } from "../utils/localStorage";
+import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
+import { VictoryModal } from "../components/VictoryModal";
+
 
 export default function SameColorsWins() {
+
+    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [showModal, setShowModal] = useState(false);
 
     const colorOptions = [
         "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#3a0436",
@@ -21,6 +26,7 @@ export default function SameColorsWins() {
 
     const initialColors = Array(15).fill(null).map(() => generateRandomColor());
     const [squareColors, setSquareColors] = useState(initialColors);
+    const [winIndicator, setWinIndicator] = useState(false);
 
     const handleSquareClick = (index: number) => {
         const newColors = [...squareColors];
@@ -32,18 +38,25 @@ export default function SameColorsWins() {
         if (newColors.every(color => color === newColors[0])) {
             setTimeout(() => {
                 if (newColors.every(color => color === newColors[0])) {
-                    alert("All squares have the same color! You win!");
-                    setCompletedGame(MiniGameTitles.SameColorsWins);
+                    setWinIndicator(true);
+                    setCompletedGame(MiniGameTitles.SameColorsWins, level);
 
                 }
             }, 300);
         }
     };
 
+    useEffect(() => {
+        if (winIndicator) {
+            setCompletedGame(MiniGameTitles.SomeMathPractice, level);
+            setShowModal(true);
+        }
+    }, [winIndicator]);
+
     return (
         <SameColorsWinsWrapper>
-            <h1>Same colors wins</h1>
-            <MinuteTimer />
+            <MinuteTimer title={MiniGameTitles.SameColorsWins} level={level} resetAfterTimeout={!showModal} />
+
             <div className="SquareWrapper">
                 {squareColors.map((color, index) => (
                     <div
@@ -54,6 +67,12 @@ export default function SameColorsWins() {
                     ></div>
                 ))}
             </div>
+
+
+            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+                setLevel(level + 1);
+                setShowModal(false);
+            }} />}
         </SameColorsWinsWrapper>
     )
 }

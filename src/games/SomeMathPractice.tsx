@@ -1,10 +1,16 @@
 import styled from "@emotion/styled"
 import MinuteTimer from "../components/MinuteTimer"
+import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { useState, useEffect } from "react";
-import { setCompletedGame } from "../utils/localStorage";
-import { MiniGamesCollection, MiniGameTitles } from "../pages/MiniGamesCollection";
+import { MiniGameTitles } from "../pages/MiniGamesCollection";
+import { VictoryModal } from "../components/VictoryModal";
+
 
 export default function SomeMathPractice() {
+
+    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [showModal, setShowModal] = useState(false);
+
     const symbolOptions = ["+", "-", "*"];
     const generateRandomSymbol = () => {
         return symbolOptions[Math.floor(Math.random() * symbolOptions.length)];
@@ -21,6 +27,7 @@ export default function SomeMathPractice() {
     const [symbol, setSymbol] = useState(generateRandomSymbol());
     const [number1, setNumber1] = useState(generateRandomNumber());
     const [number2, setNumber2] = useState(generateRandomNumber());
+    const [clickedCorrectSquare, setClickedCorrectSquare] = useState(false);
 
 
     const solutionNumber = eval(`${number1} ${symbol} ${number2}`);
@@ -46,11 +53,18 @@ export default function SomeMathPractice() {
         setSolutionSquares(generateSolutionSquares()); // Regenerate solutions if needed (e.g., on page load or other triggers)
     }, [number1, number2, symbol]); // Update if these values change
 
+    useEffect(() => {
+        if (clickedCorrectSquare) {
+            setCompletedGame(MiniGameTitles.SomeMathPractice, level);
+            setShowModal(true);
+        }
+    }, [clickedCorrectSquare]);
+
 
     return (
         <SomeMathPracticeWrapper>
-            <h1>Some math practice</h1>
-            <MinuteTimer />
+            <MinuteTimer title={MiniGameTitles.SomeMathPractice} level={level} resetAfterTimeout={!showModal} />
+
             <div className="equationWrapper">
                 <div className="equation">
                     <div className="equationSquare">{number1}</div>
@@ -68,14 +82,19 @@ export default function SomeMathPractice() {
                             key={index}
                             className="solutionSquare"
                             onClick={() => {
-                                console.log(
-                                    num === solutionNumber
-                                        ? "Correct answer!"
-                                        : `Incorrect answer: ${num}`
-                                )
+
                                 if (num === solutionNumber) {
-                                    setCompletedGame(MiniGameTitles.SomeMathPractice);
+                                    setClickedCorrectSquare(true);
+                                    setCompletedGame(MiniGameTitles.SomeMathPractice, level);
+
                                 }
+                                else {
+                                    setClickedCorrectSquare(false);
+                                    location.reload()
+
+                                }
+
+
                             }
                             }
                         >
@@ -89,11 +108,19 @@ export default function SomeMathPractice() {
                 </div>
             </div>
 
+            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+                setLevel(level + 1);
+                setShowModal(false);
+            }} />}
+
         </SomeMathPracticeWrapper>
     )
 }
 
 const SomeMathPracticeWrapper = styled.div`
+
+text-align: center;
+
 .equationWrapper {
     margin-top: 200px;
     display: flex;
