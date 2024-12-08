@@ -1,14 +1,16 @@
 import styled from "@emotion/styled"
 import { Link } from "react-router";
+import { getCompletedGame } from "../utils/localStorage";
+import { MiniGameTitles } from "../pages/MiniGamesCollection";
 
 interface Props {
-    title: string;
+    title: MiniGameTitles;
     description: string;
-    completed: boolean;
     imgSrc?: string;
 }
 
-export default function MiniGame({ title, description, completed, imgSrc }: Props) {
+export default function MiniGame({ title, description, imgSrc }: Props) {
+    const completed = getCompletedGame(title);
     return (
         <MiniGameWrapper>
             <h1>{title}</h1>

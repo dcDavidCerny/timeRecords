@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "@emotion/styled"
 import MinuteTimer from "../components/MinuteTimer";
+import { setCompletedGame } from "../utils/localStorage";
+import { MiniGameTitles } from "../pages/MiniGamesCollection";
 
 export default function SameColorsWins() {
 
@@ -31,6 +33,7 @@ export default function SameColorsWins() {
             setTimeout(() => {
                 if (newColors.every(color => color === newColors[0])) {
                     alert("All squares have the same color! You win!");
+                    setCompletedGame(MiniGameTitles.SameColorsWins);
 
                 }
             }, 300);

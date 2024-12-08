@@ -1,8 +1,13 @@
 import styled from "@emotion/styled"
 import { useEffect, useState } from "react";
 import MinuteTimer from "../components/MinuteTimer";
+import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
+import { MiniGameTitles } from "../pages/MiniGamesCollection";
+import { VictoryModal } from "../components/VictoryModal";
 
 export default function MakeItPop() {
+    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [showModal, setShowModal] = useState(false);
     const [number, setNumber] = useState(0);
     const size = (number * 9) + 50;
     const handleCircleClick = () => {
@@ -17,14 +22,20 @@ export default function MakeItPop() {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        if (number === 50) {
+            setCompletedGame(MiniGameTitles.MakeItPop, level);
+            setShowModal(true);
+        }
+    }, [number]);
+
 
     return (
 
 
         <MakeItPopWrapper>
             <div className="timerDiv">
-                <h1>Make it reach 50</h1>
-                <MinuteTimer />
+                <MinuteTimer title={MiniGameTitles.MakeItPop} level={level} resetAfterTimeout={!showModal} />
             </div>
             <div className="circle" onClick={handleCircleClick}>
                 <div className="insideCircle" style={{
@@ -36,7 +47,11 @@ export default function MakeItPop() {
             </div>
 
 
-
+            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+                setLevel(level + 1);
+                setNumber(0);
+                setShowModal(false);
+            }} />}
         </MakeItPopWrapper>
     )
 }

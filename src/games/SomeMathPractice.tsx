@@ -1,6 +1,8 @@
 import styled from "@emotion/styled"
 import MinuteTimer from "../components/MinuteTimer"
 import { useState, useEffect } from "react";
+import { setCompletedGame } from "../utils/localStorage";
+import { MiniGamesCollection, MiniGameTitles } from "../pages/MiniGamesCollection";
 
 export default function SomeMathPractice() {
     const symbolOptions = ["+", "-", "*"];
@@ -65,12 +67,16 @@ export default function SomeMathPractice() {
                         <div
                             key={index}
                             className="solutionSquare"
-                            onClick={() =>
+                            onClick={() => {
                                 console.log(
                                     num === solutionNumber
                                         ? "Correct answer!"
                                         : `Incorrect answer: ${num}`
                                 )
+                                if (num === solutionNumber) {
+                                    setCompletedGame(MiniGameTitles.SomeMathPractice);
+                                }
+                            }
                             }
                         >
                             {num}
