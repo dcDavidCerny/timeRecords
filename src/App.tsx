@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import SameColorsWins from "./games/SameColorsWins";
 import MakeItPop from "./games/MakeItPop";
 import SomeMathPractice from "./games/SomeMathPractice";
+import { PairsMemory } from "./games/PairsMemory";
 
 
 export default function App() {
@@ -24,6 +25,9 @@ export default function App() {
                         <Route path="/game/make it pop" element={<MakeItPop />} />
 
                         <Route path="/game/some math practice" element={<SomeMathPractice />} />
+
+                        <Route path="/game/pairs memory" element={<PairsMemory />} />
+
 
 
                         {/* pro vše ostatní kromě toho co bylo definované nahoře nad touto poslední routhe path */}

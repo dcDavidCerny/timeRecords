@@ -48,7 +48,10 @@ export default function MakeItPop() {
 
 
             {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
-                setLevel(level + 1);
+
+                if (level < 6) {
+                    setLevel(level + 1);
+                }
                 setNumber(0);
                 setShowModal(false);
             }} />}

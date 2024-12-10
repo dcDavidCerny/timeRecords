@@ -5,15 +5,16 @@ import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
+const GAME_TITLE = MiniGameTitles.SameColorsWins;
 
 export default function SameColorsWins() {
 
-    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [level, setLevel] = useState(getCompletedGame(GAME_TITLE) + 1);
     const [showModal, setShowModal] = useState(false);
 
     const colorOptions = [
         "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#3a0436",
-        "#33FFF3", "#F333FF", "#000000", "#ffffff", "#04ff9f"
+        "#33FFF3", "#F333FF", "#000000", "#ffffff", "#ffae00"
     ];
 
     const generateRandomColor = (currentColor?: string) => {
@@ -26,7 +27,6 @@ export default function SameColorsWins() {
 
     const initialColors = Array(15).fill(null).map(() => generateRandomColor());
     const [squareColors, setSquareColors] = useState(initialColors);
-    const [winIndicator, setWinIndicator] = useState(false);
 
     const handleSquareClick = (index: number) => {
         const newColors = [...squareColors];
@@ -38,24 +38,18 @@ export default function SameColorsWins() {
         if (newColors.every(color => color === newColors[0])) {
             setTimeout(() => {
                 if (newColors.every(color => color === newColors[0])) {
-                    setWinIndicator(true);
-                    setCompletedGame(MiniGameTitles.SameColorsWins, level);
+                    setCompletedGame(GAME_TITLE, level);
+                    setShowModal(true);
 
                 }
             }, 300);
         }
     };
 
-    useEffect(() => {
-        if (winIndicator) {
-            setCompletedGame(MiniGameTitles.SomeMathPractice, level);
-            setShowModal(true);
-        }
-    }, [winIndicator]);
 
     return (
         <SameColorsWinsWrapper>
-            <MinuteTimer title={MiniGameTitles.SameColorsWins} level={level} resetAfterTimeout={!showModal} />
+            <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
 
             <div className="SquareWrapper">
                 {squareColors.map((color, index) => (
@@ -69,8 +63,11 @@ export default function SameColorsWins() {
             </div>
 
 
-            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
-                setLevel(level + 1);
+            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+                if (level < 6) {
+                    setLevel(level + 1);
+                }
+                setSquareColors(initialColors);
                 setShowModal(false);
             }} />}
         </SameColorsWinsWrapper>

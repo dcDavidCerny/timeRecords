@@ -21,7 +21,7 @@ export default function MinuteTimer({ title, level, resetAfterTimeout }: Props) 
 
     useEffect(() => {
         // lvl 1: 60s; lvl 2: 50s; lvl 3: 40s; lvl 4: 30s; lvl 5: 20s; lvl 6: 10s
-        const newTimer = 70 - (level * 10);
+        const newTimer = 700 - (level * 10);
         setTimer(newTimer);
     }, [level]);
 

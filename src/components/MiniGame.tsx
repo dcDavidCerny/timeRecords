@@ -7,9 +7,10 @@ interface Props {
     title: MiniGameTitles;
     description: string;
     imgSrc?: string;
+    level?: number;
 }
 
-export default function MiniGame({ title, description, imgSrc }: Props) {
+export default function MiniGame({ title, description, imgSrc, level }: Props) {
     const completed = getCompletedGame(title);
     return (
         <MiniGameWrapper>

@@ -8,7 +8,7 @@ import { VictoryModal } from "../components/VictoryModal";
 
 export default function SomeMathPractice() {
 
-    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.SomeMathPractice) + 1);
     const [showModal, setShowModal] = useState(false);
 
     const symbolOptions = ["+", "-", "*"];
@@ -109,7 +109,9 @@ export default function SomeMathPractice() {
             </div>
 
             {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
-                setLevel(level + 1);
+                if (level < 6) {
+                    setLevel(level + 1);
+                }
                 setShowModal(false);
             }} />}
 
