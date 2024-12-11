@@ -3,11 +3,11 @@ import MiniGame from "../components/MiniGame"
 export const MiniGamesCollection = () => {
     return (
         <>
-            <MiniGame title={MiniGameTitles.SameColorsWins} description="Some nice game I developped in 5 mins so I can make some description?" imgSrc="/sameColorsWins.png" />
-            <MiniGame title={MiniGameTitles.MakeItPop} description="Some nice game I developped in 5 mins so I can make some description?" />
-            <MiniGame title={MiniGameTitles.SomeMathPractice} description="Some nice game I developped in 5 mins so I can make some description?" imgSrc="/someMathPractice.png" />
-            <MiniGame title={MiniGameTitles.PairsMemory} description="Some nice game I developped in 5 mins so I can make some description?" />
-            <MiniGame title={MiniGameTitles.SelectToAddsUpTo} description="Some nice game I developped in 5 mins so I can make some description?" />
+            <MiniGame title={MiniGameTitles.SameColorsWins} description="When all squares have a same color, you win!" imgSrc="/sameColorsWins.png" />
+            <MiniGame title={MiniGameTitles.MakeItPop} description="When the circle reaches max size, you win!" imgSrc="/makeItPop.png" />
+            <MiniGame title={MiniGameTitles.SomeMathPractice} description="When you click on a correct square, you win!" imgSrc="/someMathPractice.png" />
+            <MiniGame title={MiniGameTitles.PairsMemory} description="Remember the pairs, click on correct square, you win!" imgSrc="/pairsMemory.png" />
+            <MiniGame title={MiniGameTitles.SelectToAddsUpTo} description="Select squares to adds up to the total number, you win!" imgSrc="/selectToAddsUpTo.png" />
 
         </>
     )

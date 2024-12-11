@@ -5,6 +5,8 @@ import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
+const GAME_TITLE = MiniGameTitles.PairsMemory;
+
 const cards = ["😁", "😆", "😅", "🤣", "😭", "🥰", "😉", "😂", "😁", "😆", "😅", "🤣", "😭", "🥰", "😉", "😂"];
 // generate pairs memory cards with random symbols, 16 cards, 8 pairs
 const generateRandomCards = () => {
@@ -42,7 +44,7 @@ export const PairsMemory = () => {
         const revealedCardSymbol = cards[revealedCard];
         const clickedCardSymbol = cards[index];
         if (revealedCardSymbol === clickedCardSymbol && index !== revealedCard) {
-            setCompletedGame(MiniGameTitles.PairsMemory, level);
+            setCompletedGame(GAME_TITLE, level);
             setShowModal(true);
             console.log("pair found");
         } else {
@@ -77,7 +79,7 @@ export const PairsMemory = () => {
 
 
 
-            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }

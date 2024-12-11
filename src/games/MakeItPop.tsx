@@ -5,6 +5,8 @@ import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
+const GAME_TITLE = MiniGameTitles.MakeItPop;
+
 export default function MakeItPop() {
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.MakeItPop) + 1, 6));
     const [showModal, setShowModal] = useState(false);
@@ -24,7 +26,7 @@ export default function MakeItPop() {
 
     useEffect(() => {
         if (number === 50) {
-            setCompletedGame(MiniGameTitles.MakeItPop, level);
+            setCompletedGame(GAME_TITLE, level);
             setShowModal(true);
         }
     }, [number]);
@@ -35,7 +37,7 @@ export default function MakeItPop() {
 
         <MakeItPopWrapper>
             <div className="timerDiv">
-                <MinuteTimer title={MiniGameTitles.MakeItPop} level={level} resetAfterTimeout={!showModal} />
+                <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
             </div>
             <div className="circle" onClick={handleCircleClick}>
                 <div className="insideCircle" style={{
@@ -47,7 +49,7 @@ export default function MakeItPop() {
             </div>
 
 
-            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
 
                 if (level < 6) {
                     setLevel(level + 1);

@@ -1,10 +1,11 @@
 import styled from "@emotion/styled"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
+const GAME_TITLE = MiniGameTitles.SelectToAddsUpTo;
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const generateRandomNumbers = () => {
@@ -28,7 +29,7 @@ export default function DontMakeItPop() {
     return (
         <DontMakeItPopWrapper>
             <div className="timerDiv">
-                <MinuteTimer title={MiniGameTitles.SelectToAddsUpTo} level={level} resetAfterTimeout={!showModal} />
+                <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
             </div>
 
             <div className="resultNumber">
@@ -52,7 +53,7 @@ export default function DontMakeItPop() {
                 const selectedNumbers = selectedSquare.map(i => numbers[i]);
                 console.log(selectedNumbers);
                 if (selectedNumbers.reduce((a, b) => a + b, 0) === resultNumber) {
-                    setCompletedGame(MiniGameTitles.SelectToAddsUpTo, level);
+                    setCompletedGame(GAME_TITLE, level);
                     setShowModal(true);
                 } else {
                     setSelectedSquare([]);
@@ -61,7 +62,7 @@ export default function DontMakeItPop() {
             }>I got it!</button>
 
 
-            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                     setResultNumber(Math.floor(Math.random() * 53) + 1);

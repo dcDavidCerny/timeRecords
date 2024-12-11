@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
+const GAME_TITLE = MiniGameTitles.SomeMathPractice;
 
 export default function SomeMathPractice() {
 
@@ -57,7 +58,7 @@ export default function SomeMathPractice() {
     useEffect(() => {
         if (clickedCorrectSquare) {
 
-            setCompletedGame(MiniGameTitles.SomeMathPractice, level);
+            setCompletedGame(GAME_TITLE, level);
             setShowModal(true);
         }
     }, [clickedCorrectSquare]);
@@ -65,7 +66,7 @@ export default function SomeMathPractice() {
 
     return (
         <SomeMathPracticeWrapper>
-            <MinuteTimer title={MiniGameTitles.SomeMathPractice} level={level} resetAfterTimeout={!showModal} />
+            <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
 
             <div className="equationWrapper">
                 <div className="equation">
@@ -110,7 +111,7 @@ export default function SomeMathPractice() {
                 </div>
             </div>
 
-            {showModal && <VictoryModal level={level} newLevelBtnClicked={() => {
+            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }

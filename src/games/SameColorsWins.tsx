@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled"
 import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
