@@ -14,7 +14,7 @@ const generateRandomCards = () => {
 }
 
 export const PairsMemory = () => {
-    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.PairsMemory) + 1);
+    const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.PairsMemory) + 1, 6));
     const [showModal, setShowModal] = useState(false);
 
 
@@ -81,6 +81,8 @@ export const PairsMemory = () => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }
+                setShowCards(true);
+                setCards(generateRandomCards());
                 setShowModal(false);
             }} />}
         </PairsMemoryWrapper>
@@ -88,13 +90,18 @@ export const PairsMemory = () => {
 }
 
 const PairsMemoryWrapper = styled.div`
-    
     .cardsWrapper {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
-        max-width: 400px;
-        margin: 0 auto;
+        max-width: max-content;
+        border: 10px solid transparent;
+        border-image: linear-gradient(45deg, #f3ec78, #af4261) 1;
+        border-radius: 10px;
+        padding: 10px;
+        position: relative;
+        animation: rotateBorder 5s linear infinite;
+        background-color: #f3ff33;
     }
 
     .card {
@@ -112,5 +119,20 @@ const PairsMemoryWrapper = styled.div`
         text-align: center;
         margin-top: 20px;
         margin-bottom: 10vh;
+    }
+
+    @keyframes rotateBorder {
+        0% {
+            border-image-source: linear-gradient(0deg, #f3ff33, #00c3ff);
+            /* rotate: 0deg; adds for level 6*/
+        }
+
+        50% {
+            border-image-source: linear-gradient(360deg, #00c3ff, #f3ff33);
+        }
+        100% {
+            border-image-source: linear-gradient(0deg, #f3ff33, #00c3ff);
+        /* rotate: 360deg; adds for level 6*/
+        }
     }
 `

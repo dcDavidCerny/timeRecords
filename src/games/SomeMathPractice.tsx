@@ -8,7 +8,8 @@ import { VictoryModal } from "../components/VictoryModal";
 
 export default function SomeMathPractice() {
 
-    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.SomeMathPractice) + 1);
+    const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.SomeMathPractice) + 1, 6));
+
     const [showModal, setShowModal] = useState(false);
 
     const symbolOptions = ["+", "-", "*"];
@@ -55,6 +56,7 @@ export default function SomeMathPractice() {
 
     useEffect(() => {
         if (clickedCorrectSquare) {
+
             setCompletedGame(MiniGameTitles.SomeMathPractice, level);
             setShowModal(true);
         }
@@ -71,7 +73,7 @@ export default function SomeMathPractice() {
                     <div className="equationSymbol">{symbol}</div>
                     <div className="equationSquare">{number2}</div>
                 </div>
-                <div className="equalSign">=</div>
+                <div className="equationSymbol equalSign">=</div>
 
                 <div className="solutionBox">
 
@@ -112,6 +114,11 @@ export default function SomeMathPractice() {
                 if (level < 6) {
                     setLevel(level + 1);
                 }
+                setClickedCorrectSquare(false);
+                setNumber1(generateRandomNumber());
+                setNumber2(generateRandomNumber());
+                setSymbol(generateRandomSymbol());
+                setSolutionSquares(generateSolutionSquares());
                 setShowModal(false);
             }} />}
 
@@ -120,7 +127,6 @@ export default function SomeMathPractice() {
 }
 
 const SomeMathPracticeWrapper = styled.div`
-
 text-align: center;
 
 .equationWrapper {
@@ -129,6 +135,9 @@ text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+    background-color: #00c3ff;
+    padding-left: 40px;
+    border: 3px solid #dbee07;
 }
 
 .equation {
@@ -138,19 +147,22 @@ text-align: center;
 
 .equationSquare {
     text-align: center;
-    color: white;
+    /* make a color black with 0.5alpha */
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 700;
     height: 150px;
     width: 150px;
-    background-color: #636363;
-    border: 1px solid white;
+    background-color: #dbee07;
     display: inline-block;
-    transition: background-color 0.1s ease;
+    line-height: 150px; /* Match container height */
 }
 
 .equationSymbol {
     font-size: 3rem;
     margin: 0 20px;
     margin-top: 50px;
+    color: #dbee07;
+    font-weight: 700;
 }
 
 .solutionBox {
@@ -158,6 +170,11 @@ text-align: center;
     flex-wrap: wrap;
     max-width: 600px;
     gap: 10px;
+    justify-content: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: #dbee07;
+    border: 3px solid #00c3ff;;
 }
 
 .solutionSquare {
@@ -165,11 +182,12 @@ text-align: center;
     color: white;
     height: 100px;
     width: 100px;
-    background-color: #636363;
+    background-color: #00c3ff;
     border: 1px solid white;
     display: inline-block;
     cursor: pointer;
     transition: background-color 0.1s ease;
+    line-height: 100px;
 }
 
 .equalSign {

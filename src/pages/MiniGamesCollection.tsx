@@ -5,9 +5,10 @@ export const MiniGamesCollection = () => {
         <>
             <MiniGame title={MiniGameTitles.SameColorsWins} description="Some nice game I developped in 5 mins so I can make some description?" imgSrc="/sameColorsWins.png" />
             <MiniGame title={MiniGameTitles.MakeItPop} description="Some nice game I developped in 5 mins so I can make some description?" />
-            <MiniGame title={MiniGameTitles.SomeMathPractice} description="Some nice game I developped in 5 mins so I can make some description?" />
+            <MiniGame title={MiniGameTitles.SomeMathPractice} description="Some nice game I developped in 5 mins so I can make some description?" imgSrc="/someMathPractice.png" />
             <MiniGame title={MiniGameTitles.PairsMemory} description="Some nice game I developped in 5 mins so I can make some description?" />
-            <MiniGame title={MiniGameTitles.Placeholder} description="Some nice game I developped in 5 mins so I can make some description?" />
+            <MiniGame title={MiniGameTitles.SelectToAddsUpTo} description="Some nice game I developped in 5 mins so I can make some description?" />
+
         </>
     )
 }
@@ -17,7 +18,7 @@ export enum MiniGameTitles {
     MakeItPop = "make it pop",
     SomeMathPractice = "some math practice",
     PairsMemory = "pairs memory",
-    Placeholder = "placeholder"
+    SelectToAddsUpTo = "select to adds up to",
 }
 
 export const gameImages = {
@@ -25,5 +26,5 @@ export const gameImages = {
     [MiniGameTitles.MakeItPop]: "/makeItPop.png",
     [MiniGameTitles.SomeMathPractice]: "/someMathPractice.png",
     [MiniGameTitles.PairsMemory]: "/pairsMemory.png",
-    [MiniGameTitles.Placeholder]: "/placeholder.png"
+    [MiniGameTitles.SelectToAddsUpTo]: "/selectToAddsUpTo.png",
 }

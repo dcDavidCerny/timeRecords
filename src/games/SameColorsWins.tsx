@@ -9,7 +9,8 @@ const GAME_TITLE = MiniGameTitles.SameColorsWins;
 
 export default function SameColorsWins() {
 
-    const [level, setLevel] = useState(getCompletedGame(GAME_TITLE) + 1);
+    const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.SameColorsWins) + 1, 6));
+
     const [showModal, setShowModal] = useState(false);
 
     const colorOptions = [
@@ -38,6 +39,7 @@ export default function SameColorsWins() {
         if (newColors.every(color => color === newColors[0])) {
             setTimeout(() => {
                 if (newColors.every(color => color === newColors[0])) {
+                    // win result for each game
                     setCompletedGame(GAME_TITLE, level);
                     setShowModal(true);
 

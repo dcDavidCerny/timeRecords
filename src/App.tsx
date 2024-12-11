@@ -7,6 +7,7 @@ import SameColorsWins from "./games/SameColorsWins";
 import MakeItPop from "./games/MakeItPop";
 import SomeMathPractice from "./games/SomeMathPractice";
 import { PairsMemory } from "./games/PairsMemory";
+import SelectToAddsUpTo from "./games/SelectToAddsUpTo";
 
 
 export default function App() {
@@ -27,6 +28,9 @@ export default function App() {
                         <Route path="/game/some math practice" element={<SomeMathPractice />} />
 
                         <Route path="/game/pairs memory" element={<PairsMemory />} />
+
+                        <Route path="/game/select to adds up to" element={<SelectToAddsUpTo />} />
+
 
 
 

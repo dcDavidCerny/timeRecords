@@ -6,7 +6,7 @@ import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
 
 export default function MakeItPop() {
-    const [level, setLevel] = useState(getCompletedGame(MiniGameTitles.MakeItPop) + 1);
+    const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.MakeItPop) + 1, 6));
     const [showModal, setShowModal] = useState(false);
     const [number, setNumber] = useState(0);
     const size = (number * 9) + 50;
@@ -82,7 +82,7 @@ const MakeItPopWrapper = styled.div`
         cursor: pointer;
         .insideCircle {
             border: 1px solid white;
-            background-color: #04ff9f;
+            background-color: #00c3ff;
             border-radius: 50%;
             display: flex;
             align-items: center;
