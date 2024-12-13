@@ -115,6 +115,11 @@ const PairsMemoryWrapper = styled.div`
         align-items: center;
         font-size: 2rem;
         cursor: pointer;
+        
+    }
+
+    .card:hover {
+        background-color: #7fd2ed;
     }
 
     .timerDiv {
