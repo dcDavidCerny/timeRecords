@@ -4,6 +4,7 @@ import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { useState, useEffect } from "react";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
+import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.SomeMathPractice;
 
@@ -11,24 +12,56 @@ export default function SomeMathPractice() {
 
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.SomeMathPractice) + 1, 6));
 
-    const [showModal, setShowModal] = useState(false);
+    const [showVictoryModal, setShowVictoryModal] = useState(false);
+
+    const [showLossModal, setShowLossModal] = useState(false);
 
     const symbolOptions = ["+", "-", "*"];
     const generateRandomSymbol = () => {
         return symbolOptions[Math.floor(Math.random() * symbolOptions.length)];
     };
 
-    const generateRandomNumber = () => {
+    const generateRandomNumber = (level: number) => {
         if (symbol === "*") {
-            return Math.floor(Math.random() * 100) + 5;
+            switch (level) {
+                case 1:
+                    return Math.floor(Math.random() * 5) + 1;
+                case 2:
+                    return Math.floor(Math.random() * 10) + 1;
+                case 3:
+                    return Math.floor(Math.random() * 20) + 2;
+                case 4:
+                    return Math.floor(Math.random() * 50) + 5;
+                case 5:
+                    return Math.floor(Math.random() * 100) + 10;
+                case 6:
+                default:
+                    return Math.floor(Math.random() * 100) + 20;
+            }
+        } else {
+
+            switch (level) {
+                case 1:
+                    return Math.floor(Math.random() * 50) + 10;
+                case 2:
+                    return Math.floor(Math.random() * 200) + 50;
+                case 3:
+                    return Math.floor(Math.random() * 1000) + 100;
+                case 4:
+                    return Math.floor(Math.random() * 5000) + 500;
+                case 5:
+                    return Math.floor(Math.random() * 10000) + 1000;
+                case 6:
+                default:
+                    return Math.floor(Math.random() * 100000) + 5000;
+            }
         }
-        return Math.floor(Math.random() * 10000) + 100;
     };
 
 
     const [symbol, setSymbol] = useState(generateRandomSymbol());
-    const [number1, setNumber1] = useState(generateRandomNumber());
-    const [number2, setNumber2] = useState(generateRandomNumber());
+    const [number1, setNumber1] = useState(generateRandomNumber(level));
+    const [number2, setNumber2] = useState(generateRandomNumber(level));
     const [clickedCorrectSquare, setClickedCorrectSquare] = useState(false);
 
 
@@ -40,10 +73,10 @@ export default function SomeMathPractice() {
     const generateSolutionSquares = () => {
         const solutions = Array(9)
             .fill(null)
-            .map(() =>
+            .map(() => {
                 solutionNumber +
-                (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 100)
-            );
+                    (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 100)
+            });
         const randomIndex = Math.floor(Math.random() * 10);
         solutions.splice(randomIndex, 0, solutionNumber); // Insert the correct solution at a random index
         return solutions;
@@ -59,14 +92,17 @@ export default function SomeMathPractice() {
         if (clickedCorrectSquare) {
 
             setCompletedGame(GAME_TITLE, level);
-            setShowModal(true);
+            setShowVictoryModal(true);
         }
     }, [clickedCorrectSquare]);
 
 
     return (
         <SomeMathPracticeWrapper>
-            <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
+            <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
+                setShowLossModal(true);
+
+            }} />
 
             <div className="equationWrapper">
                 <div className="equation">
@@ -88,12 +124,13 @@ export default function SomeMathPractice() {
 
                                 if (num === solutionNumber) {
                                     setClickedCorrectSquare(true);
+                                    setShowVictoryModal(true);
                                     setCompletedGame(MiniGameTitles.SomeMathPractice, level);
 
                                 }
                                 else {
                                     setClickedCorrectSquare(false);
-                                    location.reload()
+                                    setShowLossModal(true);
 
                                 }
 
@@ -101,7 +138,6 @@ export default function SomeMathPractice() {
                             }
                             }
                         >
-                            {num}
                         </div>
                     ))}
 
@@ -111,16 +147,25 @@ export default function SomeMathPractice() {
                 </div>
             </div>
 
-            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+            {showVictoryModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }
                 setClickedCorrectSquare(false);
-                setNumber1(generateRandomNumber());
-                setNumber2(generateRandomNumber());
+                setNumber1(generateRandomNumber(level));
+                setNumber2(generateRandomNumber(level));
                 setSymbol(generateRandomSymbol());
                 setSolutionSquares(generateSolutionSquares());
-                setShowModal(false);
+                setShowVictoryModal(false);
+            }} />}
+
+            {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
+                setClickedCorrectSquare(false);
+                setNumber1(generateRandomNumber(level));
+                setNumber2(generateRandomNumber(level));
+                setSymbol(generateRandomSymbol());
+                setSolutionSquares(generateSolutionSquares());
+                setShowLossModal(false);
             }} />}
 
         </SomeMathPracticeWrapper>

@@ -8,15 +8,21 @@ interface Props {
     level: number;
     onOffSwitch: boolean;
     onTimerRunOut: () => void;
+    startingTime?: (level: number) => number;
 }
 
-export default function MinuteTimer({ title, level, onOffSwitch, onTimerRunOut }: Props) {
+const defaultStartingTime = (level: number) => {
+    return 70 - (level * 10);
+}
+
+export default function MinuteTimer({ title, level, onOffSwitch, onTimerRunOut, startingTime }: Props) {
     const [timer, setTimer] = useState<number>(60);
 
+    const getTime = startingTime || defaultStartingTime;
 
     useEffect(() => {
         // lvl 1: 60s; lvl 2: 50s; lvl 3: 40s; lvl 4: 30s; lvl 5: 20s; lvl 6: 10s
-        const newTimer = 70 - (level * 10);
+        const newTimer = getTime(level);
         setTimer(newTimer);
 
     }, [level]);
@@ -35,10 +41,15 @@ export default function MinuteTimer({ title, level, onOffSwitch, onTimerRunOut }
     useEffect(() => {
         if (timer === 0) {
             onTimerRunOut();
-            const newTimer = 70 - (level * 10);
-            setTimer(newTimer);
         }
     }, [timer]);
+
+    useEffect(() => {
+        if (onOffSwitch) {
+            const newTimer = getTime(level);
+            setTimer(newTimer);
+        }
+    }, [onOffSwitch]);
 
 
     return (

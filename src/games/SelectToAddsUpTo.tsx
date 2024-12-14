@@ -4,6 +4,7 @@ import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
+import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.SelectToAddsUpTo;
 
@@ -15,11 +16,13 @@ const generateRandomNumbers = () => {
 
 export default function DontMakeItPop() {
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.SelectToAddsUpTo) + 1, 6));
-    const [showModal, setShowModal] = useState(false);
+    const [showVictoryModal, setShowVictoryModal] = useState(false);
+
+    const [showLossModal, setShowLossModal] = useState(false);
 
     const [numbers, setNumbers] = useState(generateRandomNumbers());
 
-    const [resultNumber, setResultNumber] = useState(Math.floor(Math.random() * 53) + 1);
+    const [resultNumber, setResultNumber] = useState(Math.floor(Math.random() * 40) + 13);
 
     const [selectedSquare, setSelectedSquare] = useState<number[]>([]);
 
@@ -29,7 +32,12 @@ export default function DontMakeItPop() {
     return (
         <DontMakeItPopWrapper>
             <div className="timerDiv">
-                <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
+                <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
+                    setShowLossModal(true);
+
+                }} startingTime={(level) => {
+                    return 35 - (level * 5);
+                }} />
             </div>
 
             <div className="resultNumber">
@@ -54,23 +62,32 @@ export default function DontMakeItPop() {
                 console.log(selectedNumbers);
                 if (selectedNumbers.reduce((a, b) => a + b, 0) === resultNumber) {
                     setCompletedGame(GAME_TITLE, level);
-                    setShowModal(true);
+                    setShowVictoryModal(true);
                 } else {
                     setSelectedSquare([]);
+                    setShowLossModal(true);
                 }
             }
             }>I got it!</button>
 
 
-            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+            {showVictoryModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
-                    setResultNumber(Math.floor(Math.random() * 53) + 1);
+                    setResultNumber(Math.floor(Math.random() * 40) + 13);
                 }
                 setNumbers(generateRandomNumbers());
-                setShowModal(false);
+                setShowVictoryModal(false);
                 setSelectedSquare([]);
-                setResultNumber(Math.floor(Math.random() * 53) + 1);
+                setResultNumber(Math.floor(Math.random() * 40) + 13);
+            }} />}
+
+            {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
+
+                setNumbers(generateRandomNumbers());
+                setShowLossModal(false);
+                setSelectedSquare([]);
+                setResultNumber(Math.floor(Math.random() * 40) + 13);
             }} />}
         </DontMakeItPopWrapper>
     )
@@ -119,7 +136,8 @@ const DontMakeItPopWrapper = styled.div`
         }
 
         .selectedSquare {
-            background-color: rgba(0, 195, 255, 1);
+            background-color: #0088ff;
+            color: white;
 
         }
 
@@ -136,7 +154,7 @@ const DontMakeItPopWrapper = styled.div`
             transition: color 1s ease;
             &:hover {
                 background-color: #f3ff33;
-                color: black;
+                color: #00c3ff;
             }
         }
 

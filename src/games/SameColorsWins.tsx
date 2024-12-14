@@ -4,14 +4,18 @@ import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
+import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.SameColorsWins;
+
 
 export default function SameColorsWins() {
 
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.SameColorsWins) + 1, 6));
 
-    const [showModal, setShowModal] = useState(false);
+    const [showVictoryModal, setShowVictoryModal] = useState(false);
+
+    const [showLossModal, setShowLossModal] = useState(false);
 
     const colorOptions = [
         "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#3a0436",
@@ -41,7 +45,7 @@ export default function SameColorsWins() {
                 if (newColors.every(color => color === newColors[0])) {
                     // win result for each game
                     setCompletedGame(GAME_TITLE, level);
-                    setShowModal(true);
+                    setShowVictoryModal(true);
 
                 }
             }, 300);
@@ -51,28 +55,42 @@ export default function SameColorsWins() {
 
     return (
         <SameColorsWinsWrapper>
-            <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
+            <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
+                setShowLossModal(true)
+            }} startingTime={(level) => {
+                return 50 - (level * 5);
+            }} />
 
-            <div className="SquareWrapper">
-                {squareColors.map((color, index) => (
-                    <div
-                        key={index}
-                        className="Square"
-                        style={{ backgroundColor: color }}
-                        onClick={() => handleSquareClick(index)}
-                    ></div>
-                ))}
+            < div className="SquareWrapper" >
+                {
+                    squareColors.map((color, index) => (
+                        <div
+                            key={index}
+                            className="Square"
+                            style={{ backgroundColor: color }}
+                            onClick={() => handleSquareClick(index)}
+                        ></div>
+                    ))
+                }
             </div>
 
 
-            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+            {showVictoryModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }
                 setSquareColors(initialColors);
-                setShowModal(false);
-            }} />}
-        </SameColorsWinsWrapper>
+                setShowVictoryModal(false);
+            }} />
+            }
+
+            {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
+                setSquareColors(initialColors);
+                setShowLossModal(false);
+            }} />
+            }
+
+        </SameColorsWinsWrapper >
     )
 }
 

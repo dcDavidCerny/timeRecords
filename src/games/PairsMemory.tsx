@@ -4,6 +4,7 @@ import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
+import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.PairsMemory;
 
@@ -17,7 +18,9 @@ const generateRandomCards = () => {
 
 export const PairsMemory = () => {
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.PairsMemory) + 1, 6));
-    const [showModal, setShowModal] = useState(false);
+    const [showVictoryModal, setShowVictoryModal] = useState(false);
+
+    const [showLossModal, setShowLossModal] = useState(false);
 
 
     const [cards, setCards] = useState(generateRandomCards());
@@ -45,10 +48,10 @@ export const PairsMemory = () => {
         const clickedCardSymbol = cards[index];
         if (revealedCardSymbol === clickedCardSymbol && index !== revealedCard) {
             setCompletedGame(GAME_TITLE, level);
-            setShowModal(true);
-            console.log("pair found");
+            setShowVictoryModal(true);
         } else {
-            console.log("pair not found");
+            setRevealedCard(null);
+            setShowLossModal(true);
         }
     }
 
@@ -61,7 +64,12 @@ export const PairsMemory = () => {
         <PairsMemoryWrapper>
 
             <div className="timerDiv">
-                <MinuteTimer title={MiniGameTitles.PairsMemory} level={level} resetAfterTimeout={!showModal} />
+                <MinuteTimer title={MiniGameTitles.PairsMemory} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
+                    setShowLossModal(true);
+
+                }} startingTime={() => {
+                    return 10;
+                }} />
             </div>
 
             <div className="cardsWrapper">
@@ -79,13 +87,19 @@ export const PairsMemory = () => {
 
 
 
-            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+            {showVictoryModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
                 if (level < 6) {
                     setLevel(level + 1);
                 }
                 setShowCards(true);
                 setCards(generateRandomCards());
-                setShowModal(false);
+                setShowVictoryModal(false);
+            }} />}
+
+            {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
+                setShowCards(true);
+                setCards(generateRandomCards());
+                setShowLossModal(false);
             }} />}
         </PairsMemoryWrapper>
     )

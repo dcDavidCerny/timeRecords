@@ -7,11 +7,11 @@ import { VictoryModal } from "../components/VictoryModal";
 import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.MakeItPop;
-const STARTING_NUMBER = 5;
 export default function MakeItPop() {
-    const [timer, setTimer] = useState<number>(60);
 
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.MakeItPop) + 1, 6));
+    const STARTING_NUMBER = 40 - (level * 5);
+
     const [showVictoryModal, setShowVictoryModal] = useState(false);
     const [showLossModal, setShowLossModal] = useState(false);
     const [number, setNumber] = useState(STARTING_NUMBER);
@@ -49,6 +49,8 @@ export default function MakeItPop() {
                 <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
                     setShowLossModal(true);
 
+                }} startingTime={() => {
+                    return 10;
                 }} />
             </div>
             <div className="circle" onClick={handleCircleClick}>
@@ -68,13 +70,11 @@ export default function MakeItPop() {
                 }
                 setNumber(STARTING_NUMBER);
                 setShowVictoryModal(false);
-                setTimer(10);
             }} />}
 
             {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
                 setNumber(STARTING_NUMBER);
                 setShowLossModal(false);
-                setTimer(10);
             }} />}
         </MakeItPopWrapper>
     )
