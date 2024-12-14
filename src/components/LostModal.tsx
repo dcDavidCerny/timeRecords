@@ -8,12 +8,12 @@ import { gameImages, MiniGameTitles } from "../pages/MiniGamesCollection";
 interface Props {
     level: number;
     title: MiniGameTitles;
-    newLevelBtnClicked: () => void;
+    restartLevelBtnClicked: () => void;
 }
 
 
 
-export const VictoryModal = ({ title, level, newLevelBtnClicked }: Props) => {
+export const LostModal = ({ title, level, restartLevelBtnClicked }: Props) => {
 
     const imgSrc = gameImages[title];
     return (
@@ -27,7 +27,7 @@ export const VictoryModal = ({ title, level, newLevelBtnClicked }: Props) => {
                     <img src={imgSrc} alt="did not upload" width={250} height={200} />
                 </div>
                 <div className="buttonsDiv">
-                    <button onClick={newLevelBtnClicked}>Start Again level ${level}
+                    <button onClick={restartLevelBtnClicked}>Start Again level {level}
                     </button>
                     <button> <Link to="/">Back to MiniGames</Link> </button>
                 </div>

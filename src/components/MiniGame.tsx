@@ -142,14 +142,6 @@ button {
     padding: 5px;
     border-radius: 5px;
     width: 150px;
-    z-index: 100;
-/* the tooltipText is in low Z-index in case it's on the last element on the row
-problem is that the component is able to be shown only on the center div in app.tsx
-needs to be always visible, even if overlapping or smth
-easy way would be to place it above the hover icon - in case it'd be too much
-
-also scrollbar for x axis shows up... But if either way that should not be an issue
-no more*/
 }
 
 .levelIndicator {

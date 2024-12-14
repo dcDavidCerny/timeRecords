@@ -4,13 +4,17 @@ import MinuteTimer from "../components/MinuteTimer";
 import { getCompletedGame, setCompletedGame } from "../utils/localStorage";
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 import { VictoryModal } from "../components/VictoryModal";
+import { LostModal } from "../components/LostModal";
 
 const GAME_TITLE = MiniGameTitles.MakeItPop;
-
+const STARTING_NUMBER = 5;
 export default function MakeItPop() {
+    const [timer, setTimer] = useState<number>(60);
+
     const [level, setLevel] = useState(Math.min(getCompletedGame(MiniGameTitles.MakeItPop) + 1, 6));
-    const [showModal, setShowModal] = useState(false);
-    const [number, setNumber] = useState(0);
+    const [showVictoryModal, setShowVictoryModal] = useState(false);
+    const [showLossModal, setShowLossModal] = useState(false);
+    const [number, setNumber] = useState(STARTING_NUMBER);
     const size = (number * 9) + 50;
     const handleCircleClick = () => {
         setNumber(number + 1);
@@ -27,9 +31,14 @@ export default function MakeItPop() {
     useEffect(() => {
         if (number === 50) {
             setCompletedGame(GAME_TITLE, level);
-            setShowModal(true);
+            setShowVictoryModal(true);
+        }
+        if (number < 0.46) {
+            setShowLossModal(true);
         }
     }, [number]);
+
+
 
 
     return (
@@ -37,7 +46,10 @@ export default function MakeItPop() {
 
         <MakeItPopWrapper>
             <div className="timerDiv">
-                <MinuteTimer title={GAME_TITLE} level={level} resetAfterTimeout={!showModal} />
+                <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
+                    setShowLossModal(true);
+
+                }} />
             </div>
             <div className="circle" onClick={handleCircleClick}>
                 <div className="insideCircle" style={{
@@ -49,13 +61,20 @@ export default function MakeItPop() {
             </div>
 
 
-            {showModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
+            {showVictoryModal && <VictoryModal level={level} title={GAME_TITLE} newLevelBtnClicked={() => {
 
                 if (level < 6) {
                     setLevel(level + 1);
                 }
-                setNumber(0);
-                setShowModal(false);
+                setNumber(STARTING_NUMBER);
+                setShowVictoryModal(false);
+                setTimer(10);
+            }} />}
+
+            {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
+                setNumber(STARTING_NUMBER);
+                setShowLossModal(false);
+                setTimer(10);
             }} />}
         </MakeItPopWrapper>
     )

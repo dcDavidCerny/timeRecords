@@ -3,37 +3,42 @@ import { useState, useEffect } from "react";
 import styled from "@emotion/styled"
 import { MiniGameTitles } from "../pages/MiniGamesCollection";
 
-
-
 interface Props {
     title: MiniGameTitles;
     level: number;
-    resetAfterTimeout: boolean;
+    onOffSwitch: boolean;
+    onTimerRunOut: () => void;
 }
 
-export default function MinuteTimer({ title, level, resetAfterTimeout }: Props) {
+export default function MinuteTimer({ title, level, onOffSwitch, onTimerRunOut }: Props) {
     const [timer, setTimer] = useState<number>(60);
 
-    if (timer === 0 && resetAfterTimeout) {
-
-        location.reload();
-    }
 
     useEffect(() => {
         // lvl 1: 60s; lvl 2: 50s; lvl 3: 40s; lvl 4: 30s; lvl 5: 20s; lvl 6: 10s
-        const newTimer = 700 - (level * 10);
+        const newTimer = 70 - (level * 10);
         setTimer(newTimer);
+
     }, [level]);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setTimer((prev) => Math.max(prev - 1, 0));
-
+            if (onOffSwitch) {
+                setTimer((prev) => Math.max(prev - 1, 0));
+            }
 
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [onOffSwitch]);
+
+    useEffect(() => {
+        if (timer === 0) {
+            onTimerRunOut();
+            const newTimer = 70 - (level * 10);
+            setTimer(newTimer);
+        }
+    }, [timer]);
 
 
     return (
