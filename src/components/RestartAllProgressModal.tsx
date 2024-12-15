@@ -17,7 +17,6 @@ export const RestartAllProgressModal = () => {
                     }}>Yes</button>
                     <button onClick={
                         () => {
-                            if (3s)
                     window.location.reload();
                         }
                     }>Cancel</button>
@@ -26,6 +25,7 @@ export const RestartAllProgressModal = () => {
         </Modal >
     )
 }
+              // if (3s)
 
 const RestartAllProgressModalWrapper = styled.div`
 

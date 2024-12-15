@@ -1,4 +1,4 @@
-import Nav from "./components/Nav";
+import Nav from "./components/nav";
 import Footer from "./components/Footer";
 import "./App.css";
 import { MiniGamesCollection } from "./pages/MiniGamesCollection";
