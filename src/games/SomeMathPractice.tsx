@@ -21,7 +21,7 @@ export default function SomeMathPractice() {
         return symbolOptions[Math.floor(Math.random() * symbolOptions.length)];
     };
 
-    const generateRandomNumber = (level: number) => {
+    const generateRandomNumber = (level: number, symbol: string) => {
         if (symbol === "*") {
             switch (level) {
                 case 1:
@@ -29,14 +29,15 @@ export default function SomeMathPractice() {
                 case 2:
                     return Math.floor(Math.random() * 10) + 1;
                 case 3:
-                    return Math.floor(Math.random() * 20) + 2;
+                    return Math.floor(Math.random() * 15) + 2;
                 case 4:
-                    return Math.floor(Math.random() * 50) + 5;
+                    return Math.floor(Math.random() * 20) + 5;
                 case 5:
-                    return Math.floor(Math.random() * 100) + 10;
+                    return Math.floor(Math.random() * 50) + 10;
                 case 6:
+                    return Math.floor(Math.random() * 100) + 15;
                 default:
-                    return Math.floor(Math.random() * 100) + 20;
+                    throw new Error("Invalid level: " + level);
             }
         } else {
 
@@ -46,26 +47,28 @@ export default function SomeMathPractice() {
                 case 2:
                     return Math.floor(Math.random() * 200) + 50;
                 case 3:
-                    return Math.floor(Math.random() * 1000) + 100;
+                    return Math.floor(Math.random() * 500) + 100;
                 case 4:
-                    return Math.floor(Math.random() * 5000) + 500;
+                    return Math.floor(Math.random() * 1000) + 500;
                 case 5:
-                    return Math.floor(Math.random() * 10000) + 1000;
+                    return Math.floor(Math.random() * 5000) + 1000;
                 case 6:
+                    return Math.floor(Math.random() * 20000) + 10000;
                 default:
-                    return Math.floor(Math.random() * 100000) + 5000;
+                    throw new Error("Invalid level: " + level);
+
             }
         }
     };
 
 
     const [symbol, setSymbol] = useState(generateRandomSymbol());
-    const [number1, setNumber1] = useState(generateRandomNumber(level));
-    const [number2, setNumber2] = useState(generateRandomNumber(level));
+    const [number1, setNumber1] = useState(generateRandomNumber(level, symbol));
+    const [number2, setNumber2] = useState(generateRandomNumber(level, symbol));
     const [clickedCorrectSquare, setClickedCorrectSquare] = useState(false);
 
 
-    const solutionNumber = eval(`${number1} ${symbol} ${number2}`);
+    const solutionNumber = eval(`${number1} ${symbol} ${number2}`) as number;
 
 
 
@@ -73,10 +76,8 @@ export default function SomeMathPractice() {
     const generateSolutionSquares = () => {
         const solutions = Array(9)
             .fill(null)
-            .map(() => {
-                solutionNumber +
-                    (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 100)
-            });
+            .map(() => solutionNumber + (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 100)
+            );
         const randomIndex = Math.floor(Math.random() * 10);
         solutions.splice(randomIndex, 0, solutionNumber); // Insert the correct solution at a random index
         return solutions;
@@ -137,7 +138,7 @@ export default function SomeMathPractice() {
 
                             }
                             }
-                        >
+                        >{num}
                         </div>
                     ))}
 
@@ -152,20 +153,24 @@ export default function SomeMathPractice() {
                     setLevel(level + 1);
                 }
                 setClickedCorrectSquare(false);
-                setNumber1(generateRandomNumber(level));
-                setNumber2(generateRandomNumber(level));
-                setSymbol(generateRandomSymbol());
+                const symbol = generateRandomSymbol();
+                setSymbol(symbol);
+                setNumber1(generateRandomNumber(level, symbol));
+                setNumber2(generateRandomNumber(level, symbol));
                 setSolutionSquares(generateSolutionSquares());
                 setShowVictoryModal(false);
+                setLevel(level);
             }} />}
 
             {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
                 setClickedCorrectSquare(false);
-                setNumber1(generateRandomNumber(level));
-                setNumber2(generateRandomNumber(level));
-                setSymbol(generateRandomSymbol());
+                const symbol = generateRandomSymbol();
+                setSymbol(symbol);
+                setNumber1(generateRandomNumber(level, symbol));
+                setNumber2(generateRandomNumber(level, symbol));
                 setSolutionSquares(generateSolutionSquares());
                 setShowLossModal(false);
+                setLevel(level);
             }} />}
 
         </SomeMathPracticeWrapper>

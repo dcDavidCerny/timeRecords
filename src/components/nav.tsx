@@ -5,7 +5,7 @@ export default function Nav() {
     return (
         <NavWrapper>
             <div>
-                <Link to="/secret">SECRET🤫</Link>
+                <Link to="/about">ABOUT</Link>
 
             </div>
             <div className="games">

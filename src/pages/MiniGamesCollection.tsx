@@ -8,7 +8,6 @@ export const MiniGamesCollection = () => {
             <MiniGame title={MiniGameTitles.SomeMathPractice} description="When you click on a correct square, you win!" imgSrc="/someMathPractice.png" />
             <MiniGame title={MiniGameTitles.PairsMemory} description="Remember the pairs, click on correct square, you win!" imgSrc="/pairsMemory.png" />
             <MiniGame title={MiniGameTitles.SelectToAddsUpTo} description="Select squares to adds up to the total number, you win!" imgSrc="/selectToAddsUpTo.png" />
-
         </>
     )
 }
