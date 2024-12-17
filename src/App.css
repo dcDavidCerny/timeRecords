@@ -37,8 +37,7 @@ body {
     gap: 10px;
     justify-content: space-evenly;
     height: 100%;
-    overflow-x: visible;
-    overflow-y: visible;
+    overflow-y: auto;
 
 }
 

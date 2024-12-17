@@ -8,6 +8,8 @@ import MakeItPop from "./games/MakeItPop";
 import SomeMathPractice from "./games/SomeMathPractice";
 import { PairsMemory } from "./games/PairsMemory";
 import SelectToAddsUpTo from "./games/SelectToAddsUpTo";
+import { AboutComponent } from "./components/About";
+import { SignupComponent } from "./components/Signup";
 
 
 export default function App() {
@@ -20,7 +22,13 @@ export default function App() {
                     <Routes>
                         {/* pro "/" */}
                         <Route path="/" element={<MiniGamesCollection />} />
+
+                        <Route path="/about" element={<AboutComponent />} />
+
+                        <Route path="/signup" element={<SignupComponent />} />
+
                         {/* example of creating route to specific game by title */}
+
                         <Route path="/game/same colors wins" element={<SameColorsWins />} />
 
                         <Route path="/game/make it pop" element={<MakeItPop />} />

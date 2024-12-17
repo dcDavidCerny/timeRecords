@@ -1,6 +1,9 @@
 import styled from "@emotion/styled"
+import { useState } from "react";
+import { RestartAllProgressModal } from "./RestartAllProgressModal";
 
 export default function Footer() {
+    const [showModal, setShowModal] = useState(false);
     return (
         <FooterWrapper>
             <div className="madeBy">
@@ -8,8 +11,13 @@ export default function Footer() {
                 made by {'\u00A0'}<a href="https://github.com/dcDavidCerny" target="_blank">Dave {'\u00A0'}</a> 2024
             </div>
             <div className="restartProgressBtnDiv">
-                <button className="restartProgressBtn">RESTART PROGRESS</button>
+                <button className="restartProgressBtn" onClick={() => {
+                    setShowModal(true);
+                }}>RESTART PROGRESS</button>
             </div>
+
+            {showModal && <RestartAllProgressModal />}
+
         </FooterWrapper>
     )
 }

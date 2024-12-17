@@ -56,6 +56,7 @@ margin-bottom: 10px;
 height: 450px;
 width: 350px;
 padding: 5px;
+
 background-color: #dbee07;
 text-align: center;
 .description{
@@ -71,6 +72,7 @@ text-align: center;
     flex-direction: row;
     border: 1px solid white;
     padding: 10px;
+    height: 50px;
 }
 
 button {
@@ -85,6 +87,7 @@ button {
 .startBtn {
     margin-top: 10px;
     width: 100%;
+    margin-top: 33px;
 }
 
 .levelIndicatorWrapper {
@@ -97,6 +100,7 @@ button {
 
 .red {
     color: red;
+    height: 10px;
 }
 
 .oneLineParagraph {
@@ -134,8 +138,8 @@ button {
 .tooltipText {
     visibility: hidden;
     position: absolute;
-    left: 270px;
-    bottom: 20px;
+    left: 100px;
+    bottom: 50px;
     background-color: #006080;
     color: white;
     text-align: center;

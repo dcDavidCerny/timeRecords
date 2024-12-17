@@ -2,12 +2,13 @@ import styled from "@emotion/styled";
 
 interface Props {
     children: React.ReactNode;
+    narrow?: boolean;
 }
 
-export const Modal = ({ children }: Props) => {
+export const Modal = ({ children, narrow }: Props) => {
     return (
         <Overlay className="modal">
-            <StyledModal>
+            <StyledModal className={narrow ? " narrowModal" : ""}>
                 {children}
             </StyledModal>
         </Overlay>
@@ -39,6 +40,10 @@ const StyledModal = styled.div`
     width: 500px;
     overflow: auto;
     text-align: center;
+
+    &.narrowModal {
+        height: 350px;
+    }
     h1 {
         margin-bottom: 1rem;
     }

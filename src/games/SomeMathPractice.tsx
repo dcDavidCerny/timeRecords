@@ -92,6 +92,7 @@ export default function SomeMathPractice() {
     useEffect(() => {
         if (clickedCorrectSquare) {
 
+
             setCompletedGame(GAME_TITLE, level);
             setShowVictoryModal(true);
         }
@@ -126,7 +127,7 @@ export default function SomeMathPractice() {
                                 if (num === solutionNumber) {
                                     setClickedCorrectSquare(true);
                                     setShowVictoryModal(true);
-                                    setCompletedGame(MiniGameTitles.SomeMathPractice, level);
+                                    setCompletedGame(GAME_TITLE, level);
 
                                 }
                                 else {
@@ -159,7 +160,6 @@ export default function SomeMathPractice() {
                 setNumber2(generateRandomNumber(level, symbol));
                 setSolutionSquares(generateSolutionSquares());
                 setShowVictoryModal(false);
-                setLevel(level);
             }} />}
 
             {showLossModal && <LostModal level={level} title={GAME_TITLE} restartLevelBtnClicked={() => {
