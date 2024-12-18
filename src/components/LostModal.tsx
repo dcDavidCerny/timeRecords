@@ -15,7 +15,7 @@ interface Props {
 
 export const LostModal = ({ title, level, restartLevelBtnClicked }: Props) => {
 
-    const imgSrc = gameImages[title];
+    const imgSrc = `/timeRecords${gameImages[title]}`;
     return (
         <Modal>
             <LostModalWrapper>

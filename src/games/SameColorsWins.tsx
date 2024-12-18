@@ -58,7 +58,7 @@ export default function SameColorsWins() {
             <MinuteTimer title={GAME_TITLE} level={level} onOffSwitch={showLossModal || showVictoryModal ? false : true} onTimerRunOut={() => {
                 setShowLossModal(true)
             }} startingTime={(level) => {
-                return 50 - (level * 5);
+                return 60 - (level * 5);
             }} />
 
             < div className="SquareWrapper" >

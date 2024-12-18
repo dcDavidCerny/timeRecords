@@ -15,7 +15,7 @@ interface Props {
 
 export const VictoryModal = ({ title, level, newLevelBtnClicked }: Props) => {
 
-    const imgSrc = gameImages[title];
+    const imgSrc = `/timeRecords${gameImages[title]}`;
     return (
         <Modal>
             <VictoryModalWrapper>
