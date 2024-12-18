@@ -2,6 +2,9 @@
 
 Welcome to my collection of fun and interactive mini-games! This project is a showcase of my coding journey, featuring games built using **JavaScript**, **TypeScript**, **React**, and various libraries. It started as a portfolio project but turned into a creative playground for experimenting with game design and functionality.  
 
+## 🚀 Try it Out!  
+[Play the games here!](https://dcdavidcerny.github.io/timeRecords/)  
+
 ## 🕹️ List of Games:  
 
 #### 🟥 Same Colors Wins!  
@@ -28,8 +31,6 @@ Welcome to my collection of fun and interactive mini-games! This project is a sh
   - CSS for styling  
   - Additional libraries for functionality and design enhancements  
 
-## 🚀 Try it Out!  
-[Play the games here!](https://dcdavidcerny.github.io/timeRecords/)  
 
 ## 💡 About the Project  
 This project serves as a part of my **portfolio**, showcasing my coding, problem-solving, and design skills. Each game was an opportunity to dive deeper into JavaScript logic, React components, and creating dynamic, user-friendly interfaces.  
