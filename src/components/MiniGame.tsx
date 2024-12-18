@@ -43,7 +43,7 @@ export default function MiniGame({ title, description, imgSrc }: Props) {
                     </span>}
                 </p>
             </div>
-            <Link to={"game/" + title}>
+            <Link to={"/game/" + title}>
                 <button className="startBtn">START IT!</button>
             </Link>
         </MiniGameWrapper>

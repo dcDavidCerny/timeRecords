@@ -1,4 +1,4 @@
-import Nav from "./components/nav";
+import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import "./App.css";
 import { MiniGamesCollection } from "./pages/MiniGamesCollection";
@@ -21,6 +21,8 @@ export default function App() {
                 <div className="center">
                     <Routes>
                         {/* pro "/" */}
+                        <Route path="/games" element={<MiniGamesCollection />} />
+
                         <Route path="/" element={<MiniGamesCollection />} />
 
                         <Route path="/about" element={<AboutComponent />} />

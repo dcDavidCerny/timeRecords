@@ -10,7 +10,7 @@ export default function Nav() {
             </div>
             <div className="games">
 
-                <Link to="/">GAMES</Link>
+                <Link to="/games">GAMES</Link>
             </div>
             <div>
 
